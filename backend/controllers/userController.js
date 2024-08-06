@@ -46,15 +46,24 @@ const signIn = async(require, response) => {
 }
 
 const signOut = async(require, response) => {
-    response.clearCookie('Authorisation');
-    response.sendStatus(200);
+    try{
+        response.clearCookie('Authorisation');
+        response.sendStatus(200);
+    }catch(error){
+        console.log(error);
+        return response.sendStatus(400);
+    }
 
 }
 
 const checkAuth = async(require, response) => {
-    console.log(require.user);
-    response.sendStatus(200);
-
+    try{
+        console.log(require.user);
+        response.sendStatus(200);
+    }catch(error){
+        console.log(error);
+        return response.sendStatus(400);
+    }
 }
 
 module.exports = {
