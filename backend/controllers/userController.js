@@ -1,74 +1,66 @@
+const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
 
-const signUp = async(require, response) => {
-    try{
-        const email = require.body.email;
-        const password = require.body.password;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({
-            email,
-            password: hashedPassword,
+const signUp = async (req, res) => {
+    try {
+        const user = await User.create({
+            email: req.body.email,
+            password: await bcrypt.hash(req.body.password, 10)
         });
-        response.sendStatus(200);
-    }catch(error){
-        console.log(error);
-        return response.sendStatus(400);
+        res.status(201).json({ message: 'User created' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-const signIn = async(require, response) => {
-    try{
-        const email = require.body.email;
-        const password = require.body.password;
-        const user = await User.findOne({email});
-        if(!user){
-            return response.sendStatus(400);
+const signIn = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
         }
-        const isMatch = bcrypt.compareSync(password, user.password);
-        if(!isMatch){
-            return response.sendStatus(400);
+        const isMatch = await bcrypt.compare(req.body.password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Incorrect password' });
         }
-        const expiration = Date.now() + (1000*60*60*24);
-        const token = jwt.sign({ subject:user._id, expiration}, process.env.JWT_SECRET);
-        response.cookie('Authorisation', token, {
+        const expiration = 1000 * 60 * 60 * 24;
+        const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET, { expiresIn: expiration });
+        res.cookie('Authorization', token, { 
             httpOnly: true,
-            expires: new Date(expiration),
-            sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            secure: true,
+            sameSite: 'Strict',
+            maxAge: expiration,
         });
-        response.sendStatus(200);
-    }catch(error){
-        console.log(error);
-        return response.sendStatus(400);
+        res.status(200).json({ message: 'Signed in' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-const signOut = async(require, response) => {
-    try{
-        response.clearCookie('Authorisation');
-        response.sendStatus(200);
-    }catch(error){
-        console.log(error);
-        return response.sendStatus(400);
+const signOut = async (req, res) => {
+    try {
+        res.clearCookie('Authorization');
+        res.status(200).json({ message: 'Signed out' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
+};
 
-}
-
-const checkAuth = async(require, response) => {
-    try{
-        console.log(require.user);
-        response.sendStatus(200);
-    }catch(error){
+const checkAuth = async (req, res) => {
+    try {
+        res.status(200).json({ message: 'User is authenticated' });
+    } catch (error) {
         console.log(error);
-        return response.sendStatus(400);
+        res.status(400).json({ error: 'User is not authenticated' });
     }
-}
+};
 
 module.exports = {
     signUp,
     signIn,
     signOut,
-    checkAuth,
-}
+    checkAuth
+};
+

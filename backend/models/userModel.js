@@ -9,7 +9,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    links: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'link'
+    }]
 });
 
 const user = mongoose.model('user', userSchema);

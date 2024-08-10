@@ -1,80 +1,67 @@
-const Link = require('../models/link');
+const Link = require('../models/linkModel');
 
-const createLink = async(require, response) => {
-    try{
-    const link = require.body.link;
-    await Link.create({
-        link,
-    });
-    response.json({ link })
-    }catch(error){
-        console.log(error);
-        return response.sendStatus(400);
+const createLink = async (req, res) => {
+    try {
+        const link = await Link.create({
+            link: req.body.link,
+            userID: req.userID,
+        });
+        res.status(201).json({ message: 'Link created' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 };
 
-const getLinks = async(require, response) => {
-    try{
-    const links = await Link.find();
-    response.json({ links });
-    }catch(error){
-        console.log(error);
-        return response.sendStatus(400);
+const getLinks = async (req, res) => {
+    try {
+        const links = await Link.find({ userID: req.userID });
+        res.status(201).json(links);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 };
 
-const getLink = async (require, response) => {
-    try{
-    const linkID = require.params.id;
-    const link = await Link.findById(linkID);
-    response.json({ link });
-    }catch(error){
+const updateLink = async (req, res) => {
+    try {
+        link = await Link.findOneAndUpdate({ _id: req.params.id }, { link: req.body.link });
+        if (!link) {
+            return res.status(404).json({ error: 'Link not found' });
+        }
+        res.status(200).json({ message: 'Link updated' });
+    } catch (error) {
         console.log(error);
-        return response.sendStatus(400);
-    }
-}
+        res.status(400).json({ message: error.message });
+    }  
+};
 
-const updateLink = async (require, response) => {
-    try{
-    const linkID = require.params.id;
-    const link = require.body.link;
-    await Link.findByIdAndUpdate(linkID, {
-        link,
-    });
-    const note = await Link.findById(linkID);
-    response.json({ link });
-    }catch(error){
+const deleteLink = async (req, res) => {
+    try {
+        await Link.deleteOne({ _id: req.params.id });
+        res.status(200).json({ message: 'Link deleted' });
+    } catch (error) {
         console.log(error);
-        return response.sendStatus(400);
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-const deleteLink = async (require, response) => {
-    try{
-    const linkID = require.params.id;
-    await Link.findByIdAndDelete(linkID);
-    response.json({success: "Link deleted"});
-    }catch(error){
+const redirectLink = async (req, res) => {
+    try {
+        const link = await Link.findOne({ key: req.params.key });
+        if (!link) {
+            return res.status(404).json({ error: 'Link not found' });
+        }
+        link.clicks++;
+        res.redirect(link.link);
+    } catch (error) {
         console.log(error);
-        return response.sendStatus(400);
+        res.status(400).json({ message: error.message });
     }
-}
-
-const redirectLink = async (require, response) => {
-    const key = require.params.key;
-    const link = await Link.findOne({key});
-    if (!link) {
-        return response.status(404).json({error: "Link not found"});
-    }
-    link.clicks++;
-    response.redirect(link.link);
-}
+};
 
 module.exports = {
     createLink,
     getLinks,
-    getLink,
     updateLink,
     deleteLink,
     redirectLink,
-}
+};

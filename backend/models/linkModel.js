@@ -9,10 +9,10 @@ const linkSchema = new mongoose.Schema({
         type: String,
         unique: true,
         default: generateRandomKey = () => {
-            //Creates a random 5 character key
+            //Creates a random 8 character key
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let key = '';
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 8; i++) {
                 key += characters.charAt(Math.floor(Math.random() * characters.length));
             }
             return key;
@@ -21,6 +21,11 @@ const linkSchema = new mongoose.Schema({
     clicks: {
         type: Number,
         default: 0
+    },
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     }
 });
 
