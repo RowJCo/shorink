@@ -27,7 +27,7 @@ const userStore = create((set) => ({
     signIn: async () => {
         try {
             const { signInForm } = userStore.getState();
-            await fetch("http://localhost:5000/sign-in", {
+            await fetch("https://shorink.onrender.com/api/sign-in", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const userStore = create((set) => ({
     signUp: async () => {
         try {
             const { signUpForm } = userStore.getState();
-            await fetch("http://localhost:5000/sign-up", {
+            await fetch("https://shorink.onrender.com/api/sign-up", {
                 method: 'POST',
                 credentials: "include",
                 headers: {
@@ -57,7 +57,7 @@ const userStore = create((set) => ({
     },
     signOut: async () => {
         try {
-            await fetch("http://localhost:5000/sign-out", {
+            await fetch("https://shorink.onrender.com/api/sign-out", {
                 method: 'GET',
                 credentials: "include",
                 headers: {
@@ -71,7 +71,7 @@ const userStore = create((set) => ({
     },
     checkAuth: async () => {
         try {
-            await fetch("http://localhost:5000/check-auth", {
+            await fetch("https://shorink.onrender.com/api/check-auth", {
                 method: 'GET',
                 credentials: "include",
                 headers: {

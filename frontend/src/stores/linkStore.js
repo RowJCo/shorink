@@ -15,7 +15,7 @@ const linkStore = create((set) => ({
     },
     fetchLinks: async () => {
         try {
-            const response = await fetch("http://localhost:5000/links", {
+            const response = await fetch("https://shorink.onrender.com/api/links", {
                 method: 'GET',
                 credentials: "include",
                 headers: {
@@ -32,7 +32,7 @@ const linkStore = create((set) => ({
         try {
             e.preventDefault();
             const { createForm, links } = linkStore.getState();
-            const response = await fetch("http://localhost:5000/links", {
+            const response = await fetch("https://shorink.onrender.com/api/links", {
                 method: 'POST',
                 credentials: "include",
                 headers: {
@@ -53,7 +53,7 @@ const linkStore = create((set) => ({
     deleteLink: async (_id) => {
         try {
             const { links } = linkStore.getState();
-            await fetch("http://localhost:5000/links/"+_id, {
+            await fetch("https://shorink.onrender.com/api/links/"+_id, {
                 method: 'DELETE',
                 credentials: "include",
                 headers: {
@@ -77,7 +77,7 @@ const linkStore = create((set) => ({
         try {
             e.preventDefault();
             const { updateForm, links } = linkStore.getState();
-            const response = await fetch("http://localhost:5000/links/"+updateForm._id, {
+            const response = await fetch("https://shorink.onrender.com/api/links/"+updateForm._id, {
                 method: 'PUT',
                 credentials: "include",
                 headers: {
