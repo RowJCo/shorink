@@ -36,7 +36,7 @@ function LinkForm() {
               <h3 className="font-serif text-xl font-bold">Long Url</h3>
               <Link to={data.link} className="font-normal">{data.link}</Link>
               <h3 className="font-serif text-xl font-bold">Short Url</h3>
-              <Link to={"/s/"+data.key} className="font-normal">{"http://localhost:5000/s/"+data.key}</Link>
+              <Link to={"/s/"+data.key} className="font-normal">{"http://shorink.onrender.com/s/"+data.key}</Link>
               <div className="flex gap-5 mt-3">
                 <button className="font-serif bg-gray-800 text-white p-2 font-bold hover:text-gray-300 text-xl rounded" onClick={() => store.deleteLink(data._id)}>Delete</button>
                 <button className="font-serif bg-gray-800 text-white p-2 font-bold hover:text-gray-300 text-xl rounded" onClick={() => store.toggleUpdate(data)}>Edit</button>
