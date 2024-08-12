@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "shorink-server",
   "version": "1.0.0",
   "description": "The server for a url-shortener webapp.",
   "main": "server.js",
