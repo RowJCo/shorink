@@ -32,7 +32,7 @@ app.get("/api/sign-out", userController.signOut);
 app.get("/api/check-auth", checkAuth,userController.checkAuth);
 app.get("/s/:key", linkController.redirectLink);
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'), function(err) {
+  res.sendFile(path.join(__dirname, '/build/index.html'), function(err) {
     if (err) {
       res.status(500).send(err)
     }
