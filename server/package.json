@@ -1,17 +1,8 @@
 {
   "name": "shorink-server",
   "version": "1.0.0",
-  "description": "The server for a url-shortener webapp.",
+  "description": "The backend of the shorink web app.",
   "main": "server.js",
-  "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
-  },
-  "author": "Rowen Collier",
-  "license": "MIT",
-  "devDependencies": {
-    "nodemon": "^3.1.4"
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
@@ -19,6 +10,13 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.4.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.5.2"
-  }
+    "mongoose": "^8.5.2",
+    "path": "^0.12.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Rowen Collier",
+  "license": "MIT"
 }
