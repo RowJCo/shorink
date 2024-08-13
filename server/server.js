@@ -31,8 +31,12 @@ app.post("/api/sign-in", userController.signIn);
 app.get("/api/sign-out", userController.signOut);
 app.get("/api/check-auth", checkAuth,userController.checkAuth);
 app.get("/s/:key", linkController.redirectLink);
+
+const staticPath = "./build/index.html"
+const resolvedPath = path.resolve(staticPath)
+
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, './build/index.html'), function(err) {
+  res.sendFile((resolvedPath), function(err) {
     if (err) {
       res.status(500).send(err)
     }
