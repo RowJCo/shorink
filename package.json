@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "A url shortening web app.",
   "dependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.24.7",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0",
-    "react-scripts": "^5.0.0",
+    "react-scripts": "^5.0.1",
     "zustand": "^4.5.4"
   },
   "scripts": {
