@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "cd ./server && npm run start",
-    "build": "npm install && cd ./server && npm install"
+    "build": "npm install && cd ./server && npm install && cd .. && BUILD_PATH=./server/build &&  react-scripts build"
   },
   "author": "Rowen Collier",
   "license": "MIT",
