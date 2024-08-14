@@ -2,7 +2,7 @@
 
 ### What is it?
 
-Shorink (short link) is a url shortenening site made using the MERN stack.
+Shorink (short link) is a url shortenening site made using the MERN stack. You can check it out at: https://shorink.onrender.com/ ,it is hosted on a free plan so can sometimes be a bit slow to load.
 
 ### How to run it for yourself?
 
